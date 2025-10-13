@@ -30,13 +30,26 @@ This project follows Clean Architecture with the following layers:
 
 ## Tech Stack
 
-- **.NET 9**: Latest .NET framework
-- **Entity Framework Core**: ORM for database access
-- **Redis**: Caching layer
-- **Serilog**: Structured logging
-- **Sentry**: Error tracking and monitoring
-- **Swagger/OpenAPI**: API documentation
-- **xUnit**: Testing framework
+### Core
+- **.NET 9**: Latest .NET framework with minimal APIs support
+- **ASP.NET Core**: High-performance web framework
+- **C# 13**: Latest language features
+
+### Data & Caching
+- **Entity Framework Core**: ORM for database access with migrations
+- **Redis**: Distributed caching layer for performance
+
+### Logging & Monitoring
+- **Serilog**: Structured logging with multiple sinks
+- **Sentry**: Error tracking, performance monitoring, and alerting
+
+### API & Documentation
+- **Swagger/OpenAPI**: Interactive API documentation and testing
+- **Minimal APIs**: Lightweight endpoint definitions
+
+### Testing
+- **xUnit**: Unit and integration testing framework
+- **Moq** (recommended): Mocking framework for unit tests
 
 ## Getting Started
 
@@ -88,6 +101,16 @@ Run specific test project:
 dotnet test tests/OneStop.Tests
 ```
 
+Run tests with coverage:
+```bash
+dotnet test --collect:"XPlat Code Coverage"
+```
+
+Run tests with detailed output:
+```bash
+dotnet test --logger "console;verbosity=detailed"
+```
+
 ## Project Structure
 
 ```
@@ -119,18 +142,47 @@ Key configuration sections in `appsettings.json`:
 When running in Development mode, access Swagger UI at:
 - `https://localhost:3001/swagger`
 
+## Building for Production
+
+Build the application:
+```bash
+dotnet build --configuration Release
+```
+
+Publish the application:
+```bash
+dotnet publish --configuration Release --output ./publish
+```
+
 ## Additional Notes
 
 ### Pending Configuration
 
-The following items need to be configured based on requirements:
+The following items need to be configured based on your requirements:
 
-1. **Database**: Choose and configure database provider (SQL Server, PostgreSQL, etc.)
-2. **Authentication**: Implement JWT or Identity authentication
-3. **Redis**: Configure Redis connection string
+1. **Database**: Choose and configure database provider (SQL Server, PostgreSQL, MySQL, etc.)
+   - Update connection string in `appsettings.json`
+   - Run EF Core migrations
+
+2. **Authentication**: Implement authentication strategy
+   - JWT Bearer tokens
+   - ASP.NET Core Identity
+   - OAuth2/OpenID Connect
+
+3. **Redis**: Configure Redis for caching
+   - Connection string in `appsettings.json`
+   - Optional: Redis Sentinel or Cluster configuration
+
 4. **Sentry**: Add Sentry DSN for error tracking
-5. **Third-party Integrations**: Configure as needed (Google Sheets, Member Site API, etc.)
-6. **Proxy Settings**: Configure if external API calls require proxy
+   - Register at sentry.io
+   - Add DSN to `appsettings.json`
+
+5. **CORS**: Configure allowed origins for frontend
+   - Update CORS policy in `Program.cs`
+
+6. **Third-party Integrations**: Configure as needed
+   - API keys and secrets
+   - External service endpoints
 
 ## License
 

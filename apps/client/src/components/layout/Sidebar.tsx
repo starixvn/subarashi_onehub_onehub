@@ -1,7 +1,9 @@
-import { useState } from 'react';
 import { Link, useLocation } from '@tanstack/react-router';
 import { cn } from '@/libs/utils';
 import { env } from '@/configs/env';
+import { ROUTE_PATHS } from '@/configs/routes';
+import { useUIStore } from '@/stores';
+import logo from '@/assets/images/logo.svg';
 
 interface NavItem {
     id: string;
@@ -11,10 +13,15 @@ interface NavItem {
     children?: NavItem[];
 }
 
+/**
+ * Navigation items configuration with icons and labels
+ * Uses ROUTE_PATHS from configs/routes.ts for paths
+ */
 const navigationItems: NavItem[] = [
     {
         id: 'campaign',
         label: 'Campaign Management',
+        path: ROUTE_PATHS.CAMPAIGN_MANAGEMENT,
         icon: (
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
@@ -25,7 +32,6 @@ const navigationItems: NavItem[] = [
                 />
             </svg>
         ),
-        path: '/campaign-management',
     },
     {
         id: 'landing-page',
@@ -40,7 +46,32 @@ const navigationItems: NavItem[] = [
                 />
             </svg>
         ),
-        path: '/landing-page',
+        children: [
+            {
+                id: 'page-management',
+                label: 'Page Management',
+                icon: <></>,
+                path: ROUTE_PATHS.PAGE_MANAGEMENT,
+            },
+            {
+                id: 'page-builder',
+                label: 'Page Builder',
+                icon: <></>,
+                path: ROUTE_PATHS.PAGE_BUILDER,
+            },
+            {
+                id: 'asset-uploader',
+                label: 'Asset Uploader',
+                icon: <></>,
+                path: ROUTE_PATHS.ASSET_UPLOADER,
+            },
+            {
+                id: 'register-form-management',
+                label: 'Register Form Management',
+                icon: <></>,
+                path: ROUTE_PATHS.REGISTER_FORM_MANAGEMENT,
+            },
+        ],
     },
     {
         id: 'link-generator',
@@ -60,107 +91,30 @@ const navigationItems: NavItem[] = [
                 id: 'generate-link',
                 label: 'Generate Link',
                 icon: <></>,
-                path: '/link-generator/generate',
+                path: ROUTE_PATHS.GENERATE_LINK,
             },
             {
                 id: 'link-management',
                 label: 'Link Management',
                 icon: <></>,
-                path: '/link-generator/manage',
+                path: ROUTE_PATHS.LINK_MANAGEMENT,
             },
             {
                 id: 'component-management',
                 label: 'Component Management',
                 icon: <></>,
-                path: '/link-generator/components',
+                path: ROUTE_PATHS.COMPONENTS_MANAGEMENT,
             },
         ],
-    },
-    {
-        id: 'promotion',
-        label: 'Promotion Management',
-        icon: (
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"
-                />
-            </svg>
-        ),
-        path: '/promotion',
-    },
-    {
-        id: 'user-segmentation',
-        label: 'User Segmentation',
-        icon: (
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                />
-            </svg>
-        ),
-        path: '/user-segmentation',
-    },
-    {
-        id: 'data-dashboard',
-        label: 'Data Dashboard',
-        icon: (
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                />
-            </svg>
-        ),
-        path: '/data-dashboard',
-    },
-    {
-        id: 'data-tracking',
-        label: 'Data Tracking',
-        icon: (
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                />
-            </svg>
-        ),
-        path: '/data-tracking',
-    },
-    {
-        id: 'marketing',
-        label: 'Marketing Requirements',
-        icon: (
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                />
-            </svg>
-        ),
-        path: '/marketing',
     },
 ];
 
 export function Sidebar() {
     const location = useLocation();
-    const [expandedItems, setExpandedItems] = useState<string[]>([]);
+    const { sidebarExpanded, toggleSidebarItem } = useUIStore();
 
     const toggleItem = (id: string) => {
-        setExpandedItems((prev) =>
-            prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
-        );
+        toggleSidebarItem(id);
     };
 
     const isActive = (path?: string) => {
@@ -173,9 +127,7 @@ export function Sidebar() {
             {/* Logo */}
             <div className="h-16 flex items-center px-6 border-b border-gray-200">
                 <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                        <span className="text-white font-bold text-sm">OS</span>
-                    </div>
+                    <img src={logo} alt="OneStop Logo" className="w-8 h-8" />
                     <span className="font-semibold text-lg">
                         {env.APP_NAME}{' '}
                         <span className="text-sm text-gray-500">{env.APP_VERSION}</span>
@@ -224,7 +176,7 @@ export function Sidebar() {
                                     <svg
                                         className={cn(
                                             'w-4 h-4 transition-transform',
-                                            expandedItems.includes(item.id) && 'rotate-90'
+                                            sidebarExpanded.includes(item.id) && 'rotate-90'
                                         )}
                                         fill="none"
                                         stroke="currentColor"
@@ -238,7 +190,7 @@ export function Sidebar() {
                                         />
                                     </svg>
                                 </button>
-                                {expandedItems.includes(item.id) && (
+                                {sidebarExpanded.includes(item.id) && (
                                     <div className="ml-8 mt-1 space-y-1">
                                         {item.children.map((child) => (
                                             <Link

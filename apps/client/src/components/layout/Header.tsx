@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useAuth } from '@/providers/AuthProvider';
+import { useAuth } from '@/pages/login/hooks';
 
 export function Header() {
     const { user, logout } = useAuth();

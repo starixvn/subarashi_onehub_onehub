@@ -21,8 +21,4 @@ export default defineConfig({
             },
         },
     },
-    build: {
-        outDir: path.resolve(__dirname, '../server/src/OneStop.Api/wwwroot'),
-        emptyOutDir: true,
-    },
 });

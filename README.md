@@ -1,11 +1,11 @@
 # OneStop
 
-A monorepo project built with Nx, featuring a .NET 9 backend and React frontend.
+A monorepo project built with Nx workspaces, featuring a .NET 9 backend and React 19 frontend.
 
 ## Project Structure
 
 ```
-OneStop/
+one-stop/
 ├── apps/
 │   ├── server/              # .NET 9 API (Clean Architecture)
 │   │   ├── src/
@@ -13,11 +13,21 @@ OneStop/
 │   │   │   ├── OneStop.Application/
 │   │   │   ├── OneStop.Domain/
 │   │   │   └── OneStop.Infrastructure/
-│   │   └── tests/
+│   │   ├── tests/
+│   │   │   └── OneStop.Tests/
+│   │   └── OneStop.sln
 │   └── client/              # React + Vite + TypeScript
 │       ├── src/
-│       └── tests/
-└── nx.json
+│       │   ├── app/
+│       │   ├── components/
+│       │   ├── features/
+│       │   ├── hooks/
+│       │   └── main.tsx
+│       ├── tests/
+│       └── public/
+├── .husky/                  # Git hooks
+├── nx.json
+└── package.json
 ```
 
 ## Tech Stack
@@ -31,13 +41,18 @@ OneStop/
 - **Testing**: xUnit
 
 ### Frontend (React 19)
-- **Build Tool**: Vite
+- **Core**: React 19 + TypeScript + Vite 7
 - **UI Library**: shadcn/ui + Tailwind CSS v4
-- **State Management**: TanStack Query (React Query)
-- **Forms**: react-hook-form + Zod
+- **State Management**: TanStack Query v5 + Zustand
+- **Forms**: react-hook-form + Zod v4
 - **Router**: TanStack Router
 - **Testing**: Vitest + React Testing Library
 - **Linting**: ESLint + Prettier
+
+### Monorepo Tools
+- **Build System**: Nx 21
+- **Git Hooks**: Husky
+- **Commit Linting**: Commitlint (Conventional Commits)
 
 ## Getting Started
 

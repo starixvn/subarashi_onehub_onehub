@@ -31,7 +31,10 @@ app.UseStaticFiles();
 
 app.UseHttpsRedirection();
 
-app.MapGet("/", () => "Hello world!");
+// Health check endpoint
+app.MapGet("/health", () => Results.Ok(new { status = "healthy", timestamp = DateTime.UtcNow }));
+
+app.MapGet("/api", () => "Hello world!");
 
 // SPA fallback - serve index.html for client-side routing
 app.MapFallbackToFile("index.html");

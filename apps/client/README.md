@@ -1,31 +1,35 @@
 # OneStop Client - React Frontend
 
-A modern React application built with Vite, TypeScript, and Tailwind CSS.
+A modern React 19 application built with Vite 7, TypeScript, and Tailwind CSS v4.
 
 ## Tech Stack
 
 ### Core
-- **React 19**: Latest React version
-- **TypeScript**: Type-safe JavaScript
-- **Vite**: Fast build tool and dev server
+- **React 19**: Latest React version with concurrent features
+- **TypeScript 5.9**: Type-safe JavaScript
+- **Vite 7**: Fast build tool and dev server with HMR
 
 ### UI & Styling
-- **Tailwind CSS**: Utility-first CSS framework
-- **shadcn/ui**: Beautiful React components built on Tailwind CSS
+- **Tailwind CSS v4**: Utility-first CSS framework with PostCSS
+- **shadcn/ui**: Beautiful, accessible React components
+- **Sonner**: Toast notifications
+- **clsx + tailwind-merge**: Dynamic class name utilities
 
 ### State Management & Data Fetching
-- **TanStack Query (React Query)**: Server state management with caching
-- **TanStack Router**: Type-safe routing
+- **TanStack Query v5**: Server state management with caching and devtools
+- **TanStack Router**: Type-safe routing with devtools
+- **Zustand**: Lightweight state management
 
 ### Forms & Validation
 - **react-hook-form**: Performant form management
-- **Zod**: TypeScript-first schema validation
+- **Zod v4**: TypeScript-first schema validation
+- **@hookform/resolvers**: Integration between react-hook-form and validation libraries
 
 ### Code Quality
-- **ESLint**: Linting
+- **ESLint 9**: Linting with TypeScript support
 - **Prettier**: Code formatting
-- **Vitest**: Unit testing framework
-- **React Testing Library**: Component testing
+- **Vitest 3**: Fast unit testing framework with UI
+- **React Testing Library**: Component testing best practices
 
 ## Getting Started
 
@@ -77,6 +81,11 @@ npm run test:watch
 Run tests with coverage:
 ```bash
 npm run test:coverage
+```
+
+Run tests with UI:
+```bash
+npm run test:ui
 ```
 
 ## Code Quality
