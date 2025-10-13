@@ -1,0 +1,8 @@
+{
+    "extends": ["./tsconfig.json"], // Inherit from main TSConfig
+    "include": ["src/**/*.ts", "src/**/*.tsx", "eslint.config.js", "vite.config.ts"],
+    "compilerOptions": {
+        "allowJs": true,
+        "noEmit": true // Prevents compilation of lint-only files
+    }
+}

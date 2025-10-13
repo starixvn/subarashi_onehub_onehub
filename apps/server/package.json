@@ -1,0 +1,14 @@
+{
+    "name": "server",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "prepare": "dotnet restore",
+        "dev": "dotnet watch run --launch-profile https --project src/OneStop.Api/OneStop.Api.csproj",
+        "build": "dotnet build",
+        "test": "dotnet test",
+        "lint": "dotnet format",
+        "format": "dotnet format",
+        "clean": "dotnet clean && rimraf bin obj wwwroot dist"
+    }
+}

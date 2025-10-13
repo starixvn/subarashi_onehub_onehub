@@ -1,0 +1,35 @@
+{
+    "$schema": "./node_modules/nx/schemas/nx-schema.json",
+    "tui": {
+        "enabled": true
+    },
+    "targetDefaults": {
+        "build": {
+            "dependsOn": ["^build"],
+            "outputs": [
+                "{projectRoot}/dist/**",
+                "{projectRoot}/build/**",
+                "{projectRoot}/wwwroot/**"
+            ],
+            "cache": true
+        },
+        "dev": {
+            "cache": false
+        },
+        "test": {
+            "dependsOn": ["build"],
+            "outputs": ["{projectRoot}/coverage/**"],
+            "cache": true
+        },
+        "lint": {
+            "dependsOn": ["^build"],
+            "cache": true
+        },
+        "format": {
+            "cache": false
+        },
+        "clean": {
+            "cache": false
+        }
+    }
+}
