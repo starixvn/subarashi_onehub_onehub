@@ -1,0 +1,71 @@
+using System.Net.Mime;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Newtonsoft.Json;
+using ONEHub.Domain.Options;
+
+namespace ONEHub.WebApi.Startup;
+
+public static class WebApplicationSetup
+{
+    public static WebApplication ConfigureExceptionHandler(this WebApplication app, IConfiguration configuration)
+    {
+        var appSetting = configuration.GetSection(AppSetting.SettingName).Get<AppSetting>();
+
+        if (appSetting.UseErrorHandler)
+        {
+            app.UseExceptionHandler(opts => { });
+        }
+
+        return app;
+    }
+
+    public static WebApplication ConfigureSwagger(this WebApplication app, IConfiguration configuration)
+    {
+        var appSetting = configuration.GetSection(AppSetting.SettingName).Get<AppSetting>();
+
+        if (appSetting.UseSwagger)
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI(options =>
+            {
+                options.EnableTryItOutByDefault();
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "ONEHub API");
+            });
+        }
+
+        return app;
+    }
+
+    public static IApplicationBuilder ConfigureHealthCheck(this IApplicationBuilder app)
+    {
+        app.UseHealthChecks("/whoami", new HealthCheckOptions
+        {
+            AllowCachingResponses = false,
+            ResponseWriter = CustomResponseWriter
+        });
+
+        return app;
+
+        async Task CustomResponseWriter(HttpContext context, HealthReport report)
+        {
+            var result = JsonContent.SerializeObject(new
+            {
+                status = report.Status.ToString(),
+                monitors = report.Entries.Select(e => new
+                {
+                    name = e.Key,
+                    status = Enum.GetName(typeof(HealthStatus), e.Value.Status),
+                    description = e.Value.Description,
+                    values = e.Value.Data
+                })
+            }, Formatting.Indented);
+
+            context.Response.ContentType = MediaTypeNames.Application.Json;
+            await context.Response.WriteAsync(result);
+        }
+    }
+
+
+
+}

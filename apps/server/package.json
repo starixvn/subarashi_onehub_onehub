@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "prepare": "dotnet restore",
-        "dev": "dotnet watch run --launch-profile https --project src/OneStop.Api/OneStop.Api.csproj",
+        "dev": "dotnet watch run --launch-profile https --project src/ONEHub.Api/ONEHub.WebApi.csproj",
         "build": "dotnet build",
         "test": "dotnet test",
         "lint": "dotnet format",

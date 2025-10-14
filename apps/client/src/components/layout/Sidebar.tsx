@@ -127,7 +127,7 @@ export function Sidebar() {
             {/* Logo */}
             <div className="h-16 flex items-center px-6 border-b border-gray-200">
                 <div className="flex items-center gap-2">
-                    <img src={logo} alt="OneStop Logo" className="w-8 h-8" />
+                    <img src={logo} alt="ONEHub Logo" className="w-8 h-8" />
                     <span className="font-semibold text-lg">
                         {env.APP_NAME}{' '}
                         <span className="text-sm text-gray-500">{env.APP_VERSION}</span>

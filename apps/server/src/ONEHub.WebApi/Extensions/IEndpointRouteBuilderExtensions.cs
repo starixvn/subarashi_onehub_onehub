@@ -1,0 +1,45 @@
+using System.Diagnostics.CodeAnalysis;
+using ONEHub.WebApi.Endpoints;
+
+namespace ONEHub.WebApi.Extensions;
+
+public static class IEndpointRouteBuilderExtensions
+{
+    public static IEndpointRouteBuilder MapGroup(this IEndpointRouteBuilder app, IEndpoints group)
+    {
+        var groupName = group.GroupName;
+        var groupPath = group.GroupName.ToLowerInvariant();
+
+        var routeHandler = app
+            .MapGroup($"/api/{groupPath}")
+            //.WithGroupName(groupName) // use when have multiple version swagger
+            .WithTags(groupName)
+            .WithOpenApi();
+
+        return routeHandler;
+    }
+
+    public static RouteHandlerBuilder MapGet(this IEndpointRouteBuilder builder, Delegate handler, [StringSyntax("Route")] string pattern = "")
+    {
+        return builder.MapGet(pattern, handler)
+            .WithName(handler.Method.Name);
+    }
+
+    public static RouteHandlerBuilder MapPost(this IEndpointRouteBuilder builder, Delegate handler, [StringSyntax("Route")] string pattern = "")
+    {
+        return builder.MapPost(pattern, handler)
+            .WithName(handler.Method.Name);
+    }
+
+    public static RouteHandlerBuilder MapPut(this IEndpointRouteBuilder builder, Delegate handler, [StringSyntax("Route")] string pattern = "")
+    {
+        return builder.MapPut(pattern, handler)
+            .WithName(handler.Method.Name);
+    }
+
+    public static RouteHandlerBuilder MapDelete(this IEndpointRouteBuilder builder, Delegate handler, [StringSyntax("Route")] string pattern = "")
+    {
+        return builder.MapDelete(pattern, handler)
+            .WithName(handler.Method.Name);
+    }
+}

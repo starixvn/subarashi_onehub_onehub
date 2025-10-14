@@ -2,7 +2,7 @@
     "name": "one-stop",
     "version": "1.0.0",
     "private": true,
-    "description": "OneStop monorepo with .NET 9 backend and Vite + React frontend",
+    "description": "ONEHub monorepo with .NET 9 backend and Vite + React frontend",
     "keywords": [],
     "author": "",
     "license": "ISC",

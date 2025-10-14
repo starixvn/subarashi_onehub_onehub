@@ -1,4 +1,4 @@
-# OneStop
+# ONEHub
 
 A monorepo project built with Nx workspaces, featuring a .NET 9 backend and React 19 frontend.
 
@@ -9,13 +9,13 @@ one-stop/
 ├── apps/
 │   ├── server/              # .NET 9 API (Clean Architecture)
 │   │   ├── src/
-│   │   │   ├── OneStop.Api/
-│   │   │   ├── OneStop.Application/
-│   │   │   ├── OneStop.Domain/
-│   │   │   └── OneStop.Infrastructure/
+│   │   │   ├── ONEHub.WebApi/
+│   │   │   ├── ONEHub.Application/
+│   │   │   ├── ONEHub.Domain/
+│   │   │   └── ONEHub.Infrastructure/
 │   │   ├── tests/
-│   │   │   └── OneStop.Tests/
-│   │   └── OneStop.sln
+│   │   │   └── ONEHub.Tests/
+│   │   └── ONEHub.sln
 │   └── client/              # React + Vite + TypeScript
 │       ├── src/
 │       │   ├── app/
@@ -91,7 +91,7 @@ npm run dev
 
 # Backend only
 cd apps/server
-dotnet run --project src/OneStop.Api
+dotnet run --project src/ONEHub.Api
 ```
 
 ### Build

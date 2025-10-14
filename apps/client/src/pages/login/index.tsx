@@ -37,7 +37,7 @@ export default function LoginPage() {
                 {/* Logo and Title */}
                 <div className="text-center mb-8">
                     <div className="inline-flex items-center justify-center mb-4">
-                        <img src={logo} alt="OneStop Logo" className="w-16 h-16" />
+                        <img src={logo} alt="ONEHub Logo" className="w-16 h-16" />
                     </div>
                     <h1 className="text-3xl font-bold text-gray-900">{env.APP_NAME}</h1>
                     <p className="text-gray-600 mt-2">Sign in to your account</p>

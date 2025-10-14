@@ -1,4 +1,4 @@
-# OneStop API - .NET 9 Backend
+# ONEHub API - .NET 9 Backend
 
 A .NET 9 Web API built with Clean Architecture principles.
 
@@ -8,22 +8,22 @@ This project follows Clean Architecture with the following layers:
 
 ### Layers
 
-1. **Domain** (`OneStop.Domain`)
+1. **Domain** (`ONEHub.Domain`)
    - Contains enterprise business rules
    - Entities, Value Objects, Domain Events
    - No dependencies on other layers
 
-2. **Application** (`OneStop.Application`)
+2. **Application** (`ONEHub.Application`)
    - Contains application business rules
    - Use Cases, DTOs, Interfaces
    - Depends only on Domain
 
-3. **Infrastructure** (`OneStop.Infrastructure`)
+3. **Infrastructure** (`ONEHub.Infrastructure`)
    - Contains external concerns (Database, File System, Web Services, etc.)
    - Implements interfaces defined in Application
    - Depends on Application and Domain
 
-4. **API** (`OneStop.Api`)
+4. **API** (`ONEHub.Api`)
    - Entry point of the application
    - Controllers, Middleware, Filters
    - Depends on Application and Infrastructure
@@ -70,12 +70,12 @@ dotnet restore
 
 2. Update database (after configuring connection string):
 ```bash
-dotnet ef database update --project src/OneStop.Infrastructure --startup-project src/OneStop.Api
+dotnet ef database update --project src/ONEHub.Infrastructure --startup-project src/ONEHub.Api
 ```
 
 3. Run the application:
 ```bash
-dotnet run --project src/OneStop.Api
+dotnet run --project src/ONEHub.Api
 ```
 
 The API will be available at:
@@ -86,7 +86,7 @@ The API will be available at:
 
 Run in watch mode:
 ```bash
-dotnet watch --project src/OneStop.Api
+dotnet watch --project src/ONEHub.Api
 ```
 
 ### Testing
@@ -98,7 +98,7 @@ dotnet test
 
 Run specific test project:
 ```bash
-dotnet test tests/OneStop.Tests
+dotnet test tests/ONEHub.Tests
 ```
 
 Run tests with coverage:
@@ -116,15 +116,15 @@ dotnet test --logger "console;verbosity=detailed"
 ```
 server/
 ├── src/
-│   ├── OneStop.Api/              # Web API layer
-│   ├── OneStop.Application/      # Application logic layer
-│   ├── OneStop.Domain/           # Domain entities layer
-│   └── OneStop.Infrastructure/   # Infrastructure layer
+│   ├── ONEHub.Api/              # Web API layer
+│   ├── ONEHub.Application/      # Application logic layer
+│   ├── ONEHub.Domain/           # Domain entities layer
+│   └── ONEHub.Infrastructure/   # Infrastructure layer
 ├── tests/
-│   └── OneStop.Tests/
+│   └── ONEHub.Tests/
 │       ├── Unit/                 # Unit tests
 │       └── Integration/          # Integration tests
-└── OneStop.sln
+└── ONEHub.sln
 ```
 
 ## Configuration

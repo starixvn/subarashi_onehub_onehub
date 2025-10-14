@@ -1,4 +1,4 @@
-# OneStop Client - React Frontend
+# ONEHub Client - React Frontend
 
 A modern React 19 application built with Vite 7, TypeScript, and Tailwind CSS v4.
 
