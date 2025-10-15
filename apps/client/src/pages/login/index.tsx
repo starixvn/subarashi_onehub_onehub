@@ -22,7 +22,7 @@ export default function LoginPage() {
     const onSubmit = async (data: LoginFormData) => {
         try {
             loginMutation.mutate({
-                email: data.email,
+                username: data.username,
                 password: data.password,
             });
         } catch (err) {
@@ -57,15 +57,15 @@ export default function LoginPage() {
 
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                         <div className="space-y-2">
-                            <Label htmlFor="email">Email</Label>
+                            <Label htmlFor="username">Username</Label>
                             <Input
-                                id="email"
-                                type="email"
-                                placeholder="Enter your email"
-                                {...register('email')}
+                                id="username"
+                                type="text"
+                                placeholder="Enter your username"
+                                {...register('username')}
                             />
-                            {errors.email && (
-                                <p className="text-sm text-red-600">{errors.email.message}</p>
+                            {errors.username && (
+                                <p className="text-sm text-red-600">{errors.username.message}</p>
                             )}
                         </div>
 
@@ -96,18 +96,11 @@ export default function LoginPage() {
                             type="submit"
                             size="lg"
                             disabled={loginMutation.isPending}
-                            className="w-full"
+                            className="w-full bg-blue-600 hover:bg-blue-700 text-white"
                         >
                             {loginMutation.isPending ? 'Signing in...' : 'Sign In'}
                         </Button>
                     </form>
-                </div>
-
-                {/* Demo Credentials */}
-                <div className="mt-4 p-4 bg-white/50 backdrop-blur rounded-lg">
-                    <p className="text-xs text-gray-600 text-center">
-                        <strong>Demo:</strong> Use any email and password (min 6 chars) to login
-                    </p>
                 </div>
             </div>
         </div>

@@ -1,8 +1,8 @@
 namespace ONEHub.Domain.Options;
 
-public class AppSetting
+public class AppSettings
 {
-    public const string SettingName = "AppSetting";
+    public const string SettingName = "AppSettings";
 
     public bool UseErrorHandler { get; set; }
 

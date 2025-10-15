@@ -4,7 +4,7 @@ namespace ONEHub.WebApi.Filters;
 
 public class ValidatorFilter<T> : IEndpointFilter where T : class
 {
-    public async ValueTask<object?> InvokeAsync(EndpointFilterInvocationContext context, EndpointFilterDelegate next)
+    public async ValueTask<object> InvokeAsync(EndpointFilterInvocationContext context, EndpointFilterDelegate next)
     {
         var entity = context.Arguments.OfType<T>().FirstOrDefault(a => a?.GetType() == typeof(T));
 

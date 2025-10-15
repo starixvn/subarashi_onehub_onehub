@@ -10,7 +10,7 @@ public static class WebApplicationSetup
 {
     public static WebApplication ConfigureExceptionHandler(this WebApplication app, IConfiguration configuration)
     {
-        var appSetting = configuration.GetSection(AppSetting.SettingName).Get<AppSetting>();
+        var appSetting = configuration.GetSection(AppSettings.SettingName).Get<AppSettings>();
 
         if (appSetting.UseErrorHandler)
         {
@@ -22,7 +22,7 @@ public static class WebApplicationSetup
 
     public static WebApplication ConfigureSwagger(this WebApplication app, IConfiguration configuration)
     {
-        var appSetting = configuration.GetSection(AppSetting.SettingName).Get<AppSetting>();
+        var appSetting = configuration.GetSection(AppSettings.SettingName).Get<AppSettings>();
 
         if (appSetting.UseSwagger)
         {
@@ -49,7 +49,7 @@ public static class WebApplicationSetup
 
         async Task CustomResponseWriter(HttpContext context, HealthReport report)
         {
-            var result = JsonContent.SerializeObject(new
+            var result = JsonConvert.SerializeObject(new
             {
                 status = report.Status.ToString(),
                 monitors = report.Entries.Select(e => new
@@ -65,7 +65,4 @@ public static class WebApplicationSetup
             await context.Response.WriteAsync(result);
         }
     }
-
-
-
 }

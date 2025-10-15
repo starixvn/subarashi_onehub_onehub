@@ -14,7 +14,14 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddDependencyInjection(this IServiceCollection services, IConfiguration configuration)
     {
-        services.Configure<AppSetting>(configuration.GetSection(AppSetting.SettingName));
+        var appSetting = configuration.GetSection(AppSettings.SettingName).Get<AppSettings>();
+
+        if (appSetting == null)
+        {
+            throw new InvalidOperationException("App settings are not configured properly.");
+        }
+
+        services.Configure<AppSettings>(configuration.GetSection(AppSettings.SettingName));
 
         services
             .AddApplication()

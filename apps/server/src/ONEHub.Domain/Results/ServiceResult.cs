@@ -1,11 +1,11 @@
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 using ONEHub.Domain.Errors;
 
 namespace ONEHub.Domain.Results;
 
 public class ServiceResult
 {
-    protected ServiceResult(bool isSuccess, ServiceError error, string extraInfo)
+    protected ServiceResult(bool isSuccess, ServiceError error)
     {
         if ((isSuccess && error != ServiceError.None) ||
             (!isSuccess && error == ServiceError.None))
@@ -15,7 +15,6 @@ public class ServiceResult
 
         IsSuccess = isSuccess;
         Error = error;
-        ExtraInfo = extraInfo;
     }
 
     [JsonIgnore]
@@ -26,23 +25,20 @@ public class ServiceResult
 
     public ServiceError Error { get; }
 
-    [JsonIgnore]
-    public string ExtraInfo { get; set; }
+    public static ServiceResult Success() => new(true, ServiceError.None);
 
-    public static ServiceResult Success(string extraInfo = default) => new(true, ServiceError.None, extraInfo);
-
-    public static ServiceResult Failure(ServiceError error, string extraInfo = default) => new(false, error, extraInfo);
+    public static ServiceResult Failure(ServiceError error) => new(false, error);
 }
 
-public class ServiceResult<T>(bool isSuccess, ServiceError error, T result, string extraInfo)
-    : ServiceResult(isSuccess, error, extraInfo)
+public class ServiceResult<T>(bool isSuccess, ServiceError error, T result)
+    : ServiceResult(isSuccess, error)
     where T : class
 {
     public T Result { get; } = result;
 
-    public static ServiceResult<T> Success(T result, string extraInfo = default) => new(true, ServiceError.None, result, extraInfo);
+    public static ServiceResult<T> Success(T result) => new(true, ServiceError.None, result);
 
-    public new static ServiceResult<T> Failure(ServiceError error, string extraInfo = default) => new(false, error, default, extraInfo);
+    public new static ServiceResult<T> Failure(ServiceError error) => new(false, error, default);
 
-    public static ServiceResult<T> FailureWithData(ServiceError error, T result, string extraInfo = default) => new(false, error, result, extraInfo);
+    public static ServiceResult<T> FailureWithData(ServiceError error, T result) => new(false, error, result);
 }

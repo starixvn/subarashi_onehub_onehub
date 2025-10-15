@@ -55,10 +55,14 @@ export function useLogin() {
     return useMutation({
         mutationFn: (data: LoginRequest) => authApi.login(data),
         onSuccess: (response) => {
-            // Token is automatically set as HTTP-only cookie by backend
-            // We only need to update the client-side auth state
-            login(response.user);
-            navigate({ to: '/' });
+            if (response.errorCode === 0 && response.result?.user) {
+                // Token is automatically set as HTTP-only cookie by backend
+                // We only need to update the client-side auth state
+                login(response.result.user);
+                navigate({ to: '/' });
+            } else {
+                throw new Error(response.errorMessage || 'Login failed');
+            }
         },
     });
 }

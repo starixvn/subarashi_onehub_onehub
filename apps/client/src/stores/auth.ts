@@ -2,9 +2,9 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 export interface User {
-    id: string;
+    userId: number;
+    username: string;
     email: string;
-    name: string;
     avatar?: string;
 }
 

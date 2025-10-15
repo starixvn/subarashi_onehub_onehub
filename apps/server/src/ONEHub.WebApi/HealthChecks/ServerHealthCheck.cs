@@ -3,24 +3,26 @@ using System.Globalization;
 using System.Net;
 using System.Net.Sockets;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using ONEHub.Application.Services;
 
 namespace ONEHub.WebApi.HealthChecks;
 
 public class ServerHealthCheck(
-    IHttpContextAccessor httpContextAccessor)
+    IHttpContextAccessor httpContextAccessor,
+    IDateTimeProvider dateTimeProvider)
     : IHealthCheck
 {
     public async Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
     {
-        IDictionary<string, object?> result = new Dictionary<string, object?>();
+        IDictionary<string, object> result = new Dictionary<string, object>();
 
         await AddServerIpInfo(result);
         AddExtraServerInfo(result);
 
-        return HealthCheckResult.Healthy("Server Info", new ReadOnlyDictionary<string, object?>(result));
+        return HealthCheckResult.Healthy("Server Info", new ReadOnlyDictionary<string, object>(result));
     }
 
-    private static async Task AddServerIpInfo(IDictionary<string, object?> result)
+    private static async Task AddServerIpInfo(IDictionary<string, object> result)
     {
         var hostName = Dns.GetHostName();
         result.Add("Host Name", hostName);
@@ -36,7 +38,7 @@ public class ServerHealthCheck(
         }
     }
 
-    private void AddExtraServerInfo(IDictionary<string, object?> result)
+    private void AddExtraServerInfo(IDictionary<string, object> result)
     {
         var context = httpContextAccessor.HttpContext;
         if (context is null)
@@ -47,7 +49,7 @@ public class ServerHealthCheck(
         result.Add("Local Ip", context.Connection.LocalIpAddress?.ToString());
         result.Add("Local Port", context.Connection.LocalPort);
         result.Add("Client Ip", context.Connection.RemoteIpAddress?.ToString());
-        result.Add("Server Time", DateTimeOffset.Now.LocalDateTime.ToString(CultureInfo.InvariantCulture));
+        result.Add("Server Time", dateTimeProvider.OffsetNow.LocalDateTime.ToString(CultureInfo.InvariantCulture));
         result.Add("Last Updated", File.GetCreationTime(typeof(ServerHealthCheck).Assembly.Location).ToString(CultureInfo.InvariantCulture));
         result.Add("Host", context.Request.Host);
         result.Add("Schema", context.Request.Scheme);

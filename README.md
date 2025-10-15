@@ -5,7 +5,7 @@ A monorepo project built with Nx workspaces, featuring a .NET 9 backend and Reac
 ## Project Structure
 
 ```
-one-stop/
+ONEHub/
 ├── apps/
 │   ├── server/              # .NET 9 API (Clean Architecture)
 │   │   ├── src/
@@ -14,8 +14,9 @@ one-stop/
 │   │   │   ├── ONEHub.Domain/
 │   │   │   └── ONEHub.Infrastructure/
 │   │   ├── tests/
-│   │   │   └── ONEHub.Tests/
-│   │   └── ONEHub.sln
+│   │   │   └── ONEHub.Architecture.Tests/
+│   │   ├── ONEHub.sln
+│   │   └── Dockerfile
 │   └── client/              # React + Vite + TypeScript
 │       ├── src/
 │       │   ├── app/
@@ -38,7 +39,8 @@ one-stop/
 - **Logging**: Sentry, Serilog
 - **ORM**: Entity Framework Core
 - **API Documentation**: Swagger / OpenAPI
-- **Testing**: xUnit
+- **Testing**: xUnit + NetArchTest (Architecture Tests)
+- **Containerization**: Docker
 
 ### Frontend (React 19)
 - **Core**: React 19 + TypeScript + Vite 7
@@ -91,7 +93,7 @@ npm run dev
 
 # Backend only
 cd apps/server
-dotnet run --project src/ONEHub.Api
+dotnet run --project src/ONEHub.WebApi
 ```
 
 ### Build
@@ -118,12 +120,29 @@ Run all tests:
 npm run test
 ```
 
+Run backend architecture tests:
+```bash
+cd apps/server
+dotnet test
+```
+
 ### Linting
 
 Lint all packages:
 ```bash
 npm run lint
 ```
+
+### Docker Deployment
+
+Build and run using Docker:
+```bash
+cd apps/server
+docker build -t onehub-api .
+docker run -p 5000:5000 onehub-api
+```
+
+The API will be available at `http://localhost:5000`
 
 ## Learn More
 

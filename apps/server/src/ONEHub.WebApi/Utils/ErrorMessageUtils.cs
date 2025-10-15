@@ -1,33 +1,10 @@
 using System.Text;
-using Newtonsoft.Json;
-using ONEHub.Domain.Results;
 
 namespace ONEHub.WebApi.Utils;
 
 public static class ErrorMessageUtils
 {
-    public static string GenerateMessage<T>(
-        string functionName,
-        string chainName,
-        ServiceResult response,
-        T request) where T : class
-    {
-        var messageBuilder = new StringBuilder();
-        messageBuilder.AppendLine($"ERROR [{functionName}]: {JsonConvert.SerializeObject(response.Error)}");
-        messageBuilder.AppendLine($"MESSAGE: An error occurred in the {chainName} process.");
-        messageBuilder.AppendLine();
-        messageBuilder.AppendLine(response.ExtraInfo);
-        messageBuilder.AppendLine();
-        messageBuilder.AppendLine("REQUEST INFO:");
-        messageBuilder.AppendLine(JsonConvert.SerializeObject(request, Formatting.Indented));
-        messageBuilder.AppendLine();
-        messageBuilder.AppendLine("RESPONSE INFO:");
-        messageBuilder.AppendLine(JsonConvert.SerializeObject(response.Error, Formatting.Indented));
-
-        return messageBuilder.ToString();
-    }
-
-    public static string GenerateMessage(Exception exception, HttpContext? context = null)
+    public static string GenerateMessage(Exception exception, HttpContext context = null)
     {
         var messageBuilder = new StringBuilder();
 
@@ -44,7 +21,7 @@ public static class ErrorMessageUtils
         return messageBuilder.ToString();
     }
 
-    private static void AddRequestInfo(HttpContext? context, StringBuilder builder)
+    private static void AddRequestInfo(HttpContext context, StringBuilder builder)
     {
         builder.AppendLine();
         builder.AppendLine("REQUEST INFO");
@@ -72,16 +49,10 @@ public static class ErrorMessageUtils
         }
     }
 
-    private static string GetParameters(IDictionary<string, object> parameters)
-        => parameters?.Count > 0
-            ? parameters.Select(parameter => $"{parameter.Key}={parameter.Value}")
-                .Aggregate((firstPair, secondPair) => $"{firstPair};{secondPair}")
-            : string.Empty;
-
-    private static IDictionary<string, object?> GetRequestInfo(HttpContext? context)
+    private static IDictionary<string, object> GetRequestInfo(HttpContext context)
     {
         var request = context.Request;
-        return new Dictionary<string, object?>
+        return new Dictionary<string, object>
         {
             [nameof(request.Host)] = request.Host,
             [nameof(request.Path)] = request.Path,

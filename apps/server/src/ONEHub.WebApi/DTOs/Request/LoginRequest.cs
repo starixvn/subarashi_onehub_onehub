@@ -6,7 +6,7 @@ namespace ONEHub.WebApi.DTOs.Request;
 public class LoginRequest : IRequest
 {
     [Required]
-    [MinLength(6)]
+    [MinLength(1)]
     public string Username { get; set; }
 
     [Required]

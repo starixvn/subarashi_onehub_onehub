@@ -4,12 +4,14 @@ using ONEHub.WebApi.Utils;
 
 namespace ONEHub.WebApi.ExceptionHandler;
 
-public sealed class GlobalExceptionHandler(ILogger logger) : IExceptionHandler
+public sealed class GlobalExceptionHandler(
+    ILogger<GlobalExceptionHandler> logger
+    ) : IExceptionHandler
 {
-    public async ValueTask<bool> TryHandleAsync(HttpContext? httpContext, Exception exception, CancellationToken cancellationToken)
+    public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
     {
         var errorMsg = ErrorMessageUtils.GenerateMessage(exception, httpContext);
-        logger.LogError(errorMsg, exception);
+        logger.LogError(errorMsg);
 
         httpContext.Response.Clear();
         httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;

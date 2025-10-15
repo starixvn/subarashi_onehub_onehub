@@ -23,7 +23,7 @@ This project follows Clean Architecture with the following layers:
    - Implements interfaces defined in Application
    - Depends on Application and Domain
 
-4. **API** (`ONEHub.Api`)
+4. **Web API** (`ONEHub.WebApi`)
    - Entry point of the application
    - Controllers, Middleware, Filters
    - Depends on Application and Infrastructure
@@ -49,7 +49,7 @@ This project follows Clean Architecture with the following layers:
 
 ### Testing
 - **xUnit**: Unit and integration testing framework
-- **Moq** (recommended): Mocking framework for unit tests
+- **NetArchTest**: Architecture testing framework for enforcing Clean Architecture rules
 
 ## Getting Started
 
@@ -70,23 +70,23 @@ dotnet restore
 
 2. Update database (after configuring connection string):
 ```bash
-dotnet ef database update --project src/ONEHub.Infrastructure --startup-project src/ONEHub.Api
+dotnet ef database update --project src/ONEHub.Infrastructure --startup-project src/ONEHub.WebApi
 ```
 
 3. Run the application:
 ```bash
-dotnet run --project src/ONEHub.Api
+dotnet run --project src/ONEHub.WebApi
 ```
 
 The API will be available at:
-- HTTPS: `https://localhost:3001`
-- HTTP: `http://localhost:3002` (when using https profile)
+- HTTPS: `https://localhost:7290`
+- HTTP: `http://localhost:5252`
 
 ### Development
 
 Run in watch mode:
 ```bash
-dotnet watch --project src/ONEHub.Api
+dotnet watch --project src/ONEHub.WebApi
 ```
 
 ### Testing
@@ -96,9 +96,9 @@ Run all tests:
 dotnet test
 ```
 
-Run specific test project:
+Run architecture tests:
 ```bash
-dotnet test tests/ONEHub.Tests
+dotnet test tests/ONEHub.Architecture.Tests
 ```
 
 Run tests with coverage:
@@ -116,15 +116,14 @@ dotnet test --logger "console;verbosity=detailed"
 ```
 server/
 ├── src/
-│   ├── ONEHub.Api/              # Web API layer
+│   ├── ONEHub.WebApi/           # Web API layer
 │   ├── ONEHub.Application/      # Application logic layer
 │   ├── ONEHub.Domain/           # Domain entities layer
 │   └── ONEHub.Infrastructure/   # Infrastructure layer
 ├── tests/
-│   └── ONEHub.Tests/
-│       ├── Unit/                 # Unit tests
-│       └── Integration/          # Integration tests
-└── ONEHub.sln
+│   └── ONEHub.Architecture.Tests/  # Architecture tests
+├── ONEHub.sln
+└── Dockerfile
 ```
 
 ## Configuration
@@ -140,7 +139,7 @@ Key configuration sections in `appsettings.json`:
 ## API Documentation
 
 When running in Development mode, access Swagger UI at:
-- `https://localhost:3001/swagger`
+- `https://localhost:7290/swagger`
 
 ## Building for Production
 
@@ -153,6 +152,20 @@ Publish the application:
 ```bash
 dotnet publish --configuration Release --output ./publish
 ```
+
+## Docker Deployment
+
+Build Docker image:
+```bash
+docker build -t onehub-api .
+```
+
+Run with Docker:
+```bash
+docker run -p 5000:5000 onehub-api
+```
+
+The API will be available at `http://localhost:5000`
 
 ## Additional Notes
 

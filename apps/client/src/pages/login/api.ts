@@ -2,18 +2,25 @@ import { apiClient } from '@/libs/apiClient';
 import { type User } from '@/stores';
 
 export interface LoginRequest {
-    email: string;
+    username: string;
     password: string;
 }
 
 export interface LoginResponse {
-    user: User;
-    // Note: Token is set as HTTP-only cookie by backend, not in response body
+    errorCode: number;
+    errorMessage: string;
+    result?: {
+        user: User;
+        accessToken: string; // Not used in client, stored as HTTP-only cookie
+        refreshToken: string; // Not used in client, stored as HTTP-only cookie
+    };
 }
 
 /**
  * Authentication API
  * Handles all auth-related API calls
+ *
+ * Note: Token refresh is automatically handled by apiClient on 401 errors
  */
 export const authApi = {
     login: (data: LoginRequest) => {
@@ -22,14 +29,5 @@ export const authApi = {
 
     logout: () => {
         return apiClient.post('/auth/logout');
-    },
-
-    getCurrentUser: () => {
-        return apiClient.get<User>('/auth/me');
-    },
-
-    refreshToken: () => {
-        // HTTP-only cookie is sent automatically with credentials: 'include'
-        return apiClient.post<{ success: boolean }>('/auth/refresh');
     },
 };

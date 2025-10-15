@@ -14,11 +14,14 @@ A modern React 19 application built with Vite 7, TypeScript, and Tailwind CSS v4
 - **shadcn/ui**: Beautiful, accessible React components
 - **Sonner**: Toast notifications
 - **clsx + tailwind-merge**: Dynamic class name utilities
+- **class-variance-authority**: Type-safe component variants
+- **next-themes**: Theme management for dark mode
 
 ### State Management & Data Fetching
 - **TanStack Query v5**: Server state management with caching and devtools
 - **TanStack Router**: Type-safe routing with devtools
 - **Zustand**: Lightweight state management
+- **Axios**: Promise-based HTTP client
 
 ### Forms & Validation
 - **react-hook-form**: Performant form management
@@ -52,7 +55,7 @@ Run the development server:
 npm run dev
 ```
 
-The app will be available at `http://localhost:3000`
+The app will be available at `http://localhost:5173` (default Vite port)
 
 ### Building
 
@@ -144,7 +147,7 @@ import { Component } from '@/components/Component';
 Create a `.env.local` file in the root of the client directory:
 
 ```env
-VITE_API_URL=https://localhost:3001/api
+VITE_API_URL=https://localhost:7290/api
 ```
 
 Access in code:

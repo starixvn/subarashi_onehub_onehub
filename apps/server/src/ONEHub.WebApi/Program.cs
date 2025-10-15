@@ -20,21 +20,20 @@ app.UseWhen(
 
 app.ConfigureExceptionHandler(builder.Configuration);
 
+app.UseCors();
+
 app.ConfigureSwagger(builder.Configuration);
 
 app.UseRouting();
 
-app.UseCors();
+app.UseAuthorization();
+
+app.MapGet("/", () => "ONEHub is running...");
+
+app.UseEndpoints(_ => { });
 
 app.UseRequestLocalization();
 
-// Serve static files from wwwroot
-app.UseDefaultFiles();
-app.UseStaticFiles();
-
 app.MapEndpoints();
-
-// SPA fallback - serve index.html for client-side routing
-app.MapFallbackToFile("index.html");
 
 app.Run();

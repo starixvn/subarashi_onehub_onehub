@@ -18,7 +18,7 @@ public class MemoryHealthCheck(IMemoryCache memoryCache) : IHealthCheck
             Gen2Collections = GC.CollectionCount(2)
         };
 
-        var data = new Dictionary<string, object?>
+        var data = new Dictionary<string, object>
         {
             { "Memory Cache", memoryCache.GetCurrentStatistics() },
             { "Memory Used", usedMemory }

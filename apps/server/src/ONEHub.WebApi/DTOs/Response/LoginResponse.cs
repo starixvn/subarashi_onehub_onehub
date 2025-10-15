@@ -1,13 +1,13 @@
-using ONEHub.Domain.Entities;
+using ONEHub.Domain.Results;
 using ONEHub.WebApi.DTOs.Interfaces;
 
 namespace ONEHub.WebApi.DTOs.Response;
 
-public class LoginResponse : IResponse<User>
+public class LoginResponse : IResponse<AuthTokenResult>
 {
     public int ErrorCode { get; set; }
 
     public string ErrorMessage { get; set; }
 
-    public User Result { get; set; }
+    public AuthTokenResult Result { get; set; }
 }
